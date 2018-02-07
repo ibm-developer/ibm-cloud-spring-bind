@@ -5,7 +5,7 @@ This library provides Spring Boot auto configuration for accessing IBM Cloud ser
 
 * [Overview](#overview)
 * [Usage](#usage)
-* [Binding IBM Cloud Services to a Spring Boot Application](#Binding-IBM-Cloud-Services-to-a-Spring-Boot Application)
+* [Binding IBM Cloud Services to a Spring Boot Application](#binding-ibm-cloud-services-to-a-spring-boot-application)
 * [Related Documentation](#related-documentation)
 * [Development](#development)  
   * [Contributing](#contributing)
@@ -77,9 +77,11 @@ Your application must be bound to an IBM Cloud service in order to use this libr
 You can use the [IBM Cloud App Services Console](https://console.bluemix.net/developer/appservice/dashboard) to create Spring Boot apps, create services, and bind the services to apps.
 2. IBM Cloud Developer Tools CLI  
 You can also use the [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cloudnative/idt/index.html#developercli) to create a Spring Boot app, create services, and bind the services to the app.
-3. Manually create an IBM Cloud service and add the configuration values to the `application.properties` file.  
-<p>For example, from the [IBM Cloud Services Catalg](https://console.bluemix.net/catalog/) select the [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db) service and click Create to create a  Cloudant service.  
-<p>On the Service Credentials tab of the service select the View Credentials drop down and copy the `username`, `password`, and `url` values to your app's `application.properties` file as follows:  
+3. Manually create an IBM Cloud service and add the configuration values to the `application.properties` file.      
+
+    For example, from the [IBM Cloud Services Catalog](https://console.bluemix.net/catalog) select the [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db) service and click Create to create a  Cloudant service.
+
+    On the Service Credentials tab of the service select the View Credentials drop down and copy the `username`, `password`, and `url` values to your app's `application.properties` file as follows:  
 
     ~~~
     cloudant.username=62c520dc-9367...  
