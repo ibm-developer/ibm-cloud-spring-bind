@@ -1,0 +1,5 @@
+{
+  "cloudant_username": "file-json-username",
+  "cloudant_password": "file-json-password",
+  "cloudant_url": "https://file-json.cloudant.com"
+}

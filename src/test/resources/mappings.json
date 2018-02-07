@@ -1,0 +1,29 @@
+{
+  "version": 2,
+  "cloudant": {
+    "url": {
+      "searchPatterns": [
+        "cloudfoundry:$['cloudantNoSQLDB'][0].credentials.url",
+        "env:service_cloudant",
+        "env:cloudant_url",
+        "file:cloudant.url.txt"
+      ]
+    },
+    "username": {
+      "searchPatterns": [
+        "cloudfoundry:$['cloudantNoSQLDB'][0].credentials.username",
+        "env:cloudant_config:$.cloudant_username",
+        "env:cloudant_username",
+        "file:localdev-config.json:$.cloudant_username"
+      ]
+    },
+    "password": {
+      "searchPatterns": [
+        "cloudfoundry:$['cloudantNoSQLDB'][0].credentials.password",
+        "env:service_cloudant",
+        "env:cloudant_password",
+        "file:localdev-config.json:$.cloudant_password"
+      ]
+    }
+  }
+}
