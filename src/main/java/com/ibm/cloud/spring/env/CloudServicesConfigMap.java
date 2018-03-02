@@ -8,10 +8,15 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.concurrent.ConcurrentHashMap;
@@ -23,11 +28,14 @@ class CloudServicesConfigMap {
     private static final String MAPPINGS_JSON = "/mappings.json";
     private static final String VCAP_SERVICES = "VCAP_SERVICES";
 
-    private JsonNode config = null;            //configuration to be using
+    JsonNode config = null;            //configuration to be using
     private final ConcurrentMap<String, DocumentContext> resourceCache = new ConcurrentHashMap<>();    //used to cache resources loaded during processing
 
-    private static class SingletonHelper {
-        private static final CloudServicesConfigMap MAPPINGS;
+    @Autowired
+    ApplicationContext appContext;
+
+    static class SingletonHelper {
+        static CloudServicesConfigMap MAPPINGS;
 
         static {
             MAPPINGS = new CloudServicesConfigMap();
@@ -44,7 +52,7 @@ class CloudServicesConfigMap {
         return SingletonHelper.MAPPINGS;
     }
 
-    private JsonNode getJson(String path) {
+    JsonNode getJson(String path) {
         LOGGER.debug("getJson() for " + path);
         ObjectMapper mapper = new ObjectMapper();
         JsonNode mappings = null;
@@ -183,33 +191,22 @@ class CloudServicesConfigMap {
         } else {
             // if no location within the file has been specified then
             // assume that the value == the first line of the file contents
-            if (!target.startsWith("/")) {
-                // Relative path means it's a classpath resource
-                LOGGER.debug("Looking for classpath resource : " + target);
-                try {
-                    Resource resource = new ClassPathResource(target);
-                    if (resource.exists()) {
-                        InputStream fstream = resource.getInputStream();
-                        if (fstream != null) {
-                            InputStreamReader isReader = new InputStreamReader(fstream);
-                            BufferedReader reader = new BufferedReader(isReader);
-                            value = reader.readLine();
-                        }
+            // Relative path means it's a classpath resource
+            String path = target.startsWith("/") ? "file:" + target.trim() : "classpath:" + target.trim();
+            LOGGER.debug("Looking for resource : " + path);
+            try {
+                Resource resource = appContext.getResource(path);
+                if (resource.exists()) {
+                    InputStream fstream = resource.getInputStream();
+                    if (fstream != null) {
+                        InputStreamReader isReader = new InputStreamReader(fstream);
+                        BufferedReader reader = new BufferedReader(isReader);
+                        value = reader.readLine();
                     }
-                } catch (IOException e) {
-                    LOGGER.debug("Unexpected exception getting ObjectMapper for mappings.json: " + e);
-                    throw new CloudServicesException("Unexpected exception getting ObjectMapper for mappings.json", e);
                 }
-            } else {
-                // look for the file specified
-                try {
-                    BufferedReader file = new BufferedReader(new FileReader(target));
-                    value = file.readLine();
-                    file.close();
-                    LOGGER.debug("Read value from file: " + value);
-                } catch (IOException e) {
-                    LOGGER.debug("Unexpected exception reading value from file: " + e);
-                }
+            } catch (IOException e) {
+                LOGGER.debug("Unexpected exception getting ObjectMapper for mappings.json: " + e);
+                throw new CloudServicesException("Unexpected exception getting ObjectMapper for mappings.json", e);
             }
         }
         return value;
