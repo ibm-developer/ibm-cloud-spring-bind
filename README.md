@@ -5,7 +5,7 @@ This library provides Spring Boot auto configuration for accessing IBM Cloud ser
 
 * [Overview](#overview)
 * [Usage](#usage)
-* [Binding IBM Cloud Services to a Spring Boot Application](#Binding-IBM-Cloud-Services-to-a-Spring-Boot Application)
+* [Binding IBM Cloud Services to a Spring Boot Application](#binding-ibm-cloud-services-to-a-spring-boot-application)
 * [Related Documentation](#related-documentation)
 * [Development](#development)  
   * [Contributing](#contributing)
