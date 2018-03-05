@@ -105,15 +105,14 @@ For information about contributing see...<i>more to come here</i>.
 
 ### Testing
 
-At this time you can only test locally as the dependency is not yet in Maven Central. 
+At this time you can only use the dependency by building and installing it locally as it is not yet in Maven Central. 
 
-To test locally first build the project by issuing `mvn package`. Make sure the unit tests all pass.
+To test/run locally:
+1. Build the project by issuing `mvn package`. Make sure the unit tests all pass.
+2. Install the dependency locally with the following command:
 
-After a successful build you can install the dependency locally with the following command:
-
-`mvn install:install-file -Dfile=target/ibm-cloud-spring-service-bind-1.0.0.jar -DpomFile=pom.xml`
-
-You can now include the dependency in another project and use as described above in [usage](#usage)
+   `mvn install:install-file -Dfile=target/ibm-cloud-spring-service-bind-1.0.0.jar -DpomFile=pom.xml`
+3. Include the dependency in another project and use as described above in [usage](#usage)
 
 
 ### Using in Other Projects
