@@ -78,14 +78,16 @@ You can use the [IBM Cloud App Services Console](https://console.bluemix.net/dev
 2. IBM Cloud Developer Tools CLI  
 You can also use the [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cloudnative/idt/index.html#developercli) to create a Spring Boot app, create services, and bind the services to the app.
 3. Manually create an IBM Cloud service and add the configuration values to the `application.properties` file.  
-<p>For example, from the [IBM Cloud Services Catalg](https://console.bluemix.net/catalog/) select the [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db) service and click Create to create a  Cloudant service.</p>  
-<p>On the Service Credentials tab of the service select the View Credentials drop down and copy the `username`, `password`, and `url` values to your app's `application.properties` file as follows:  
 
-    ~~~
-    cloudant.username=62c520dc-9367...  
-    cloudant.password=8c03bd171cd99...
-    cloudant.url=https://62c520dc-9367...cloudant.com
-    ~~~  
+   For example, from the [IBM Cloud Services Catalg](https://console.bluemix.net/catalog/) select the [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db) service and click Create to create a  Cloudant service.</p>  
+
+   On the Service Credentials tab of the service select the View Credentials drop down and copy the `username`, `password`, and `url` values to your app's `application.properties` file as follows:  
+
+   ~~~ properties
+   cloudant.username=62c520dc-9367...  
+   cloudant.password=8c03bd171cd99...
+   cloudant.url=https://62c520dc-9367...cloudant.com
+   ~~~  
  
 
 
