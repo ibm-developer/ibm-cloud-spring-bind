@@ -74,9 +74,11 @@ To access service configuration in your code you can use the <code>@Value</code>
 Your application must be bound to an IBM Cloud service in order to use this library. The following methods of service binding are supported:
 
 1. IBM Cloud App Services Console  
-You can use the [IBM Cloud App Services Console](https://console.bluemix.net/developer/appservice/dashboard) to create Spring Boot apps, create services, and bind the services to apps.
+
+   You can use the [IBM Cloud App Services Console](https://console.bluemix.net/developer/appservice/dashboard) to create Spring Boot apps, create services, and bind the services to apps.
 2. IBM Cloud Developer Tools CLI  
-You can also use the [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cloudnative/idt/index.html#developercli) to create a Spring Boot app, create services, and bind the services to the app.
+
+   You can also use the [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cloudnative/idt/index.html#developercli) to create a Spring Boot app, create services, and bind the services to the app.
 3. Manually create an IBM Cloud service and add the configuration values to the `application.properties` file.  
 
    For example, from the [IBM Cloud Services Catalg](https://console.bluemix.net/catalog/) select the [Cloudant NoSQL DB](https://console.bluemix.net/catalog/services/cloudant-nosql-db) service and click Create to create a  Cloudant service.</p>  
