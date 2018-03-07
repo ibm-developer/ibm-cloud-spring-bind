@@ -18,7 +18,7 @@ This library provides Spring Boot auto configuration for accessing IBM Cloud ser
 
 This library allows easy access to IBM Cloud services configuration data for services that have been bound to a Spring Boot application.
 
-Including the dependency `ibm-cloud-spring-service-bind` auto configures a <code>PropertySource</code> to allow service configuration using Spring property source mechanisms such as <code>@Value</code> annotations, <code>Environment</code> objects, etc.
+Including the dependency `ibm-cloud-spring-boot-service-bind` auto configures a <code>PropertySource</code> to allow service configuration using Spring property source mechanisms such as <code>@Value</code> annotations, <code>Environment</code> objects, etc.
 
 Multiple runtime environments are supported such as:  
 
@@ -41,7 +41,7 @@ Dependency configuration:
 ```xml
 <dependency>
    <groupId>com.ibm.cloud</groupId>
-   <artifactId>ibm-cloud-spring-service-bind</artifactId>
+   <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
    <version>0.0.1</version>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Dependency configuration:
 
 ```groovy
 dependencies {
-    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-service-bind', version: '0.0.1'
+    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-boot-service-bind', version: '0.0.1'
 }
 ```
 
@@ -107,7 +107,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Using in Other Projects
 
-The preferred approach for using ibm-cloud-spring-service-bind in other projects is to use the Gradle or Maven dependency as described above.
+The preferred approach for using ibm-cloud-spring-boot-service-bind in other projects is to use the Gradle or Maven dependency as described above.
 
 ### License
 
