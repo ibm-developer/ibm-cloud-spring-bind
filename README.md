@@ -103,19 +103,7 @@ Your application must be bound to an IBM Cloud service in order to use this libr
 
 ### Contributing
 
-For information about contributing see...<i>more to come here</i>.
-
-### Testing
-
-At this time you can only use the dependency by building and installing it locally as it is not yet in Maven Central. 
-
-To test/run locally:
-1. Build the project by issuing `mvn package`. Make sure the unit tests all pass.
-2. Install the dependency locally with the following command:
-
-   `mvn install:install-file -Dfile=target/ibm-cloud-spring-service-bind-1.0.0.jar -DpomFile=pom.xml`
-3. Include the dependency in another project and use as described above in [usage](#usage)
-
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Using in Other Projects
 
@@ -125,7 +113,7 @@ The preferred approach for using ibm-cloud-spring-service-bind in other projects
 
 Copyright © 2018 IBM Corp. All rights reserved.
 
-Licensed under the apache license, version 2.0 (the "license"); you may not use this file except in compliance with the license.  you may obtain a copy of the license at
+Licensed under the Apache License, Version 2.0 (the "license"); you may not use this file except in compliance with the license.  you may obtain a copy of the license at
 
     http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -139,4 +127,3 @@ Before opening a new issue please consider the following:
 * Please check the [existing issues](https://github.com/ibm-developer/ibm-cloud-spring-bind/issues)
 to see if the problem has already been reported. Note that the default search
 includes only open issues, but it may already have been closed.
-* When opening a new issue [here in github](../../issues) please complete the template fully.
