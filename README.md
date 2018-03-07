@@ -18,7 +18,7 @@ This library provides Spring Boot auto configuration for accessing IBM Cloud ser
 
 This library allows easy access to IBM Cloud services configuration data for services that have been bound to a Spring Boot application.
 
-Including the dependency `ibm-cloud-spring-service-bind` auto configures a <code>PropertySource</code> to allow service configuration using Spring property source mechanisms such as <code>@Value</code> annotations, <code>Environment</code> objects, etc.
+Including the dependency `ibm-cloud-spring-boot-service-bind` auto configures a <code>PropertySource</code> to allow service configuration using Spring property source mechanisms such as <code>@Value</code> annotations, <code>Environment</code> objects, etc.
 
 Multiple runtime environments are supported such as:  
 
@@ -41,7 +41,7 @@ Dependency configuration:
 ```xml
 <dependency>
    <groupId>com.ibm.cloud</groupId>
-   <artifactId>ibm-cloud-spring-service-bind</artifactId>
+   <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
    <version>0.0.1</version>
 </dependency>
 ```
@@ -50,7 +50,7 @@ Dependency configuration:
 
 ```groovy
 dependencies {
-    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-service-bind', version: '0.0.1'
+    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-boot-service-bind', version: '0.0.1'
 }
 ```
 
@@ -103,29 +103,17 @@ Your application must be bound to an IBM Cloud service in order to use this libr
 
 ### Contributing
 
-For information about contributing see...<i>more to come here</i>.
-
-### Testing
-
-At this time you can only use the dependency by building and installing it locally as it is not yet in Maven Central. 
-
-To test/run locally:
-1. Build the project by issuing `mvn package`. Make sure the unit tests all pass.
-2. Install the dependency locally with the following command:
-
-   `mvn install:install-file -Dfile=target/ibm-cloud-spring-service-bind-1.0.0.jar -DpomFile=pom.xml`
-3. Include the dependency in another project and use as described above in [usage](#usage)
-
+See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ### Using in Other Projects
 
-The preferred approach for using ibm-cloud-spring-service-bind in other projects is to use the Gradle or Maven dependency as described above.
+The preferred approach for using ibm-cloud-spring-boot-service-bind in other projects is to use the Gradle or Maven dependency as described above.
 
 ### License
 
 Copyright © 2018 IBM Corp. All rights reserved.
 
-Licensed under the apache license, version 2.0 (the "license"); you may not use this file except in compliance with the license.  you may obtain a copy of the license at
+Licensed under the Apache License, Version 2.0 (the "license"); you may not use this file except in compliance with the license.  you may obtain a copy of the license at
 
     http://www.apache.org/licenses/LICENSE-2.0.html
 
@@ -139,4 +127,3 @@ Before opening a new issue please consider the following:
 * Please check the [existing issues](https://github.com/ibm-developer/ibm-cloud-spring-bind/issues)
 to see if the problem has already been reported. Note that the default search
 includes only open issues, but it may already have been closed.
-* When opening a new issue [here in github](../../issues) please complete the template fully.

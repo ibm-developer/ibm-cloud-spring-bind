@@ -3,23 +3,19 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.ibm.cloud</groupId>
-  <artifactId>ibm-cloud-spring-service-bind</artifactId>
+  <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
-  <name>IBM Cloud Service Binding for Spring</name>
-  <!--<url>http://github.com/xxxxxxx</url>-->
+  <name>IBM Cloud Service Binding for Spring Boot</name>
+  <description>Auto configuration for Spring Boot apps bound to IBM Cloud services</description>
+  <url>https://github.com/ibm-developer/ibm-cloud-spring-bind</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>1.7.5</version>
-    </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-autoconfigure</artifactId>
@@ -75,6 +71,7 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
+
   <build>
     <plugins>
       <plugin>
@@ -91,15 +88,85 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.0.2</version>
         <configuration>
-          <!-- DO NOT include log4j.properties file in your Jar -->
-          <!--<excludes>-->
-            <!--<exclude>**/log4j.properties</exclude>-->
-          <!--</excludes>-->
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
           </archive>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-source-plugin</artifactId>
+        <version>2.2.1</version>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <goals>
+              <goal>jar-no-fork</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-gpg-plugin</artifactId>
+        <version>1.5</version>
+        <executions>
+          <execution>
+            <id>sign-artifacts</id>
+            <phase>verify</phase>
+            <goals>
+              <goal>sign</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
+
+  <distributionManagement>
+    <snapshotRepository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    </snapshotRepository>
+    <repository>
+      <id>ossrh</id>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+
+  <developers>
+    <developer>
+      <name>Paul Bennett</name>
+      <email>pwbennet@us.ibm.com</email>
+      <organization>IBM</organization>
+      <organizationUrl>http://www.ibm.com</organizationUrl>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>The Apache License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+
+  <scm>
+    <connection>scm:git:git://github.com/ibm-developer/ibm-cloud-spring-bind.git</connection>
+    <developerConnection>scm:git:ssh://github.com:ibm-developer/ibm-cloud-spring-bind.git</developerConnection>
+    <url>http://github.com/ibm-developer/ibm-cloud-spring-bind/tree/master</url>
+  </scm>
+
 </project>
