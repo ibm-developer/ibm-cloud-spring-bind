@@ -14,7 +14,7 @@ If you want to contribute to the repository, here's a quick guide:
   4. Commit your changes:  
     * Use the present tense (`"Add feature"` not `"Added Feature"`)
     * Use the imperative mood (`"Move cursor to…"` not `"Moves cursor to…"`)
-    * Include relevant Emoji from our [Emoji cheatsheet](#emoji-cheatsheet)
+    * Include relevant Emoji from our [Emoji cheatsheet](#emoji-cheatsheet) :smile:
   5. Push to your fork and submit a pull request to the **master** branch
 
 ## Testing
@@ -24,7 +24,7 @@ To test/run your changes locally:
 2. Install the dependency locally with the following command:
 
    `mvn install:install-file -Dfile=target/ibm-cloud-spring-service-bind-1.0.0.jar -DpomFile=pom.xml`
-3. Include the dependency in another project and use as described above in the Usage section in the [README.md](README.md)
+3. Include the dependency in another project and use as described above in the [Usage section in the README](README.md#usage)
 
 # Developer's Certificate of Origin 1.1
 
