@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.ibm.cloud</groupId>
-  <artifactId>ibm-cloud-spring-service-bind</artifactId>
+  <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
   <version>1.0.0</version>
   <packaging>jar</packaging>
 
