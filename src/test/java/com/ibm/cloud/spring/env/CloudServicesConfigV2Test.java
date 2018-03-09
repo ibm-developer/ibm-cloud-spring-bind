@@ -9,11 +9,13 @@ import org.springframework.test.context.support.TestPropertySourceUtils;
 import static org.junit.Assert.assertEquals;
 
 /**
- *  This class directly tests CloudServicesPropertySource.
+ *  This class directly tests CloudServicesPropertySource and
+ *  CloudServicesEnvironmentPostProcessor.
+ *
  *  CloudServicesConfigMap is completely, though indirectly,
  *  exercised by these tests.
  */
-public class CloudServicesConfigTest {
+public class CloudServicesConfigV2Test {
 
     String VCAP_SERVICES = "{\"cloudantNoSQLDB\":[{\"credentials\":{\"username\":\"VCAP_SERVICES-username\",\"password\":\"VCAP_SERVICES-password\",\"host\":\"VCAP_SERVICES.cloudant.com\",\"port\":999,\"url\":\"https://VCAP_SERVICES.cloudant.com\"},\"syslog_drain_url\":null,\"volume_mounts\":[],\"label\":\"cloudantNoSQLDB\",\"provider\":null,\"plan\":\"Lite\",\"name\":\"VCAP_SERVICES-cloudantno-1234567890\",\"tags\":[\"data_management\",\"ibm_created\",\"lite\",\"ibm_dedicated_public\"]}]}";
 
@@ -27,11 +29,8 @@ public class CloudServicesConfigTest {
 
     @Before
     public void setUp() {
+        CloudServicesConfigMap.getInstance("/mappings.v2.json").setAppContext(appContext);
         initializer.postProcessEnvironment(this.appContext.getEnvironment(), null);
-        CloudServicesConfigMap.SingletonHelper.MAPPINGS = new CloudServicesConfigMap();
-        CloudServicesConfigMap.SingletonHelper.MAPPINGS.appContext = appContext;
-        CloudServicesConfigMap.SingletonHelper.MAPPINGS.config =
-                CloudServicesConfigMap.SingletonHelper.MAPPINGS.getJson("/mappings.json");
     }
 
     @Test

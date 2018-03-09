@@ -26,7 +26,7 @@ class CloudServicesPropertySource extends PropertySource<Object> {
 
     private void init() {
         try {
-            configMap = CloudServicesConfigMap.fromMappings();
+            configMap = CloudServicesConfigMap.getInstance();
         } catch (CloudServicesException e) {
             LOGGER.warn("Error reading configMap file", e);
             configMap = null;
