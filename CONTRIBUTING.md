@@ -25,7 +25,7 @@ To test/run your changes locally:
 3. Install the dependency locally with the following command:
 
    `mvn install:install-file -Dfile=target/ibm-cloud-spring-boot-service-bind-1.x.x.jar -DpomFile=pom.xml`
-4. Include the dependency in another project and use as described above in the [Usage section in the README](README.md#usage), substituting your version number (`1.x.x` in the above command).
+4. Include the dependency in another project and use as described in the [Usage](README.md#usage) section in the README, substituting your version number (`1.x.x` in the above command).
 
 # Developer's Certificate of Origin 1.1
 
