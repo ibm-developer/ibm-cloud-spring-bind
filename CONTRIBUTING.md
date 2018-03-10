@@ -20,8 +20,8 @@ If you want to contribute to the repository, here's a quick guide:
 ## Testing
 
 To test/run your changes locally:
-1. Make your changes. Update the `<version>` in `pom.xml` to distinguish your version any versions in the local Maven cache. Standard semantic versioning (`major.minor.patch`) conventions are used. 
-2. Build this project by issuing `mvn package`. Make sure the tests all pass.
+1. Make your changes. Update the `<version>` in `pom.xml` to distinguish your version from any versions in the local Maven cache. Standard semantic versioning (`major.minor.patch`) conventions are used. Be sure to update/add tests for your changes.
+2. Build the project by issuing `mvn package`. Make sure the tests all pass.
 3. Install the dependency locally with the following command:
 
    `mvn install:install-file -Dfile=target/ibm-cloud-spring-boot-service-bind-1.x.x.jar -DpomFile=pom.xml`
