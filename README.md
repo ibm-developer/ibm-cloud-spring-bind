@@ -41,7 +41,7 @@ Dependency configuration:
 <dependency>
    <groupId>com.ibm.cloud</groupId>
    <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
-   <version>0.0.1</version>
+   <version>1.1.0</version>
 </dependency>
 ```
 
