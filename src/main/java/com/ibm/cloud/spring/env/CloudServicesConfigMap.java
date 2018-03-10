@@ -3,6 +3,7 @@ package com.ibm.cloud.spring.env;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.IntNode;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.PathNotFoundException;
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
@@ -25,31 +27,39 @@ import java.util.concurrent.ConcurrentMap;
 class CloudServicesConfigMap {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CloudServicesConfigMap.class);
-    private static final String MAPPINGS_JSON = "/mappings.json";
     private static final String VCAP_SERVICES = "VCAP_SERVICES";
-
-    JsonNode config = null;            //configuration to be using
+    private static String mappingsFile = "/mappings.json";
+    private static CloudServicesConfigMap instance;
+    private static JsonNode config = null;            //configuration to be using
     private final ConcurrentMap<String, DocumentContext> resourceCache = new ConcurrentHashMap<>();    //used to cache resources loaded during processing
+    private int mappingsVersion = 1;
 
     @Autowired
     ApplicationContext appContext;
 
-    static class SingletonHelper {
-        static CloudServicesConfigMap MAPPINGS;
-
-        static {
-            MAPPINGS = new CloudServicesConfigMap();
-            MAPPINGS.config = MAPPINGS.getJson(MAPPINGS_JSON);
-        }
-    }
-
     /**
-     * Create a cloud services mapping object from mappings.json
+     * Create a CloudServicesConfigMap from the map file
      *
      * @return the configured service mapper
      */
-    static CloudServicesConfigMap fromMappings() {
-        return SingletonHelper.MAPPINGS;
+    static synchronized CloudServicesConfigMap getInstance() {
+        if (instance == null) {
+            instance = new CloudServicesConfigMap();
+            config = instance.getJson(mappingsFile);
+        }
+        return instance;
+    }
+
+    /**
+     * Create a CloudServicesConfigMap from the given map file
+     *
+     * @param mapFile The name of the mapping file
+     * @return The configured service mapper
+     **/
+    static synchronized CloudServicesConfigMap getInstance(String mapFile) {
+        mappingsFile = mapFile;
+        instance = null;        // force refresh
+        return getInstance();
     }
 
     JsonNode getJson(String path) {
@@ -84,51 +94,65 @@ class CloudServicesConfigMap {
      *             with format "src:target"
      * @return The value specified by the "src:target" or null if not found
      */
-     String getValue(String name) {
+    String getValue(String name) {
         if (config == null) {
             return null;    //config wasn't initialised for some reason, so cannot resolve anything
         }
         String value = null;
-        String keySegment[] = parseOnfirst(name, ".");
-        if (!keySegment[0].isEmpty() && !keySegment[1].isEmpty()) {
-            JsonNode node = config.get(keySegment[0]);
-            if (node == null || node.isNull()) {
-                return null;        // 1st segment could not be located
-            }
-            node = node.get(keySegment[1]);
-            if (node == null || node.isNull()) {
-                return null;        // 2nd segment could not be located
-            }
-            ArrayNode array = (ArrayNode) node.get("searchPatterns");
-            if (array.isArray()) {
-                for (final JsonNode entryNode : array) {
-                    String entry = entryNode.asText();
-                    LOGGER.debug("entryNode " + entryNode);
-                    String token[] = parseOnfirst(entry, ":");
-                    LOGGER.debug("tokens " + token[0] + " , " + token[1]);
-                    if (!token[0].isEmpty() && !token[1].isEmpty()) {
-                        switch (token[0]) {
-                            case "cloudfoundry":
-                                value = getCloudFoundryValue(token[1]);
-                                break;
-                            case "env":
-                                value = getEnvValue(token[1]);
-                                break;
-                            case "file":
-                                value = getFileValue(token[1]);
-                                break;
-                            default:
-                                LOGGER.warn("Unknown protocol in searchPatterns : " + token[0]);
-                                break;
-                        }
-                    }
-                    if (value != null) {
-                        break;
-                    }
+        IntNode versionNode = (IntNode) config.get("version");
+        if (versionNode != null && !versionNode.isNull()) {
+            mappingsVersion = (Integer) versionNode.numberValue();
+        }
+        JsonNode node = null;
+        if (mappingsVersion > 1) {
+            String keySegment[] = parseOnfirst(name, ".");
+            if (!keySegment[0].isEmpty() && !keySegment[1].isEmpty()) {
+                node = config.get(keySegment[0]);
+                if (node == null || node.isNull()) {
+                    return null;        // 1st segment could not be located
+                }
+                node = node.get(keySegment[1]);
+                if (node == null || node.isNull()) {
+                    return null;        // 2nd segment could not be located
                 }
             } else {
-                LOGGER.warn("search patterns in mapping.json is NOT an array, values will not be resolved");
+                return null;
             }
+        } else {
+            node = config.get(name);
+            if (node == null || node.isNull()) {
+                return null;        //specified name could not be located
+            }
+        }
+        ArrayNode array = (ArrayNode) node.get("searchPatterns");
+        if (array.isArray()) {
+            for (final JsonNode entryNode : array) {
+                String entry = entryNode.asText();
+                LOGGER.debug("entryNode " + entryNode);
+                String token[] = parseOnfirst(entry, ":");
+                LOGGER.debug("tokens " + token[0] + " , " + token[1]);
+                if (!token[0].isEmpty() && !token[1].isEmpty()) {
+                    switch (token[0]) {
+                        case "cloudfoundry":
+                            value = getCloudFoundryValue(token[1]);
+                            break;
+                        case "env":
+                            value = getEnvValue(token[1]);
+                            break;
+                        case "file":
+                            value = getFileValue(token[1]);
+                            break;
+                        default:
+                            LOGGER.warn("Unknown protocol in searchPatterns : " + token[0]);
+                            break;
+                    }
+                }
+                if (value != null) {
+                    break;
+                }
+            }
+        } else {
+            LOGGER.warn("search patterns in mapping.json is NOT an array, values will not be resolved");
         }
         return value;
     }
@@ -192,7 +216,13 @@ class CloudServicesConfigMap {
             // if no location within the file has been specified then
             // assume that the value == the first line of the file contents
             // Relative path means it's a classpath resource
-            String path = target.startsWith("/") ? "file:" + target.trim() : "classpath:" + target.trim();
+            String path;
+            if (mappingsVersion > 1) {
+                path = target.startsWith("/") ? "file:" + target.trim() : "classpath:" + target.trim();
+            }
+            else {
+                path = target.startsWith("/server/") ? "classpath:" + target.substring("/server/".length()) : "file:" + target.trim();
+            }
             LOGGER.debug("Looking for resource : " + path);
             try {
                 Resource resource = appContext.getResource(path);
@@ -217,16 +247,18 @@ class CloudServicesConfigMap {
     private DocumentContext getJsonStringFromFile(String filePath) {
         String json = null;
         if (filePath != null && !filePath.isEmpty()) {
-            if (!filePath.startsWith("/")) {
-                // Relative path means it's a classpath resource
-                LOGGER.debug("Looking for classpath resource : " + filePath);
-                JsonNode node = getJson(filePath);
+            // Relative path or /server/ means it's a classpath resource
+            if (!filePath.startsWith("/") || filePath.startsWith("/server/")) {
+                String path = filePath.startsWith("/server/") ? filePath.substring("/server/".length()) : filePath;
+                LOGGER.debug("Looking for classpath resource : " + path);
+                JsonNode node = getJson(path);
                 if (node != null) {
                     json = node.toString();
                     LOGGER.debug("Class path json : " + json);
                 }
             } else {
-                // look for the file specified
+                // absolute path
+                LOGGER.debug("Looking for file: " + filePath);
                 try {
                     json = new String(Files.readAllBytes(Paths.get(filePath)));
                 } catch (Exception e) {
@@ -258,6 +290,10 @@ class CloudServicesConfigMap {
             value = System.getProperty(key);
         }
         return value;
+    }
+
+    public void setAppContext(ConfigurableApplicationContext appContext) {
+        this.appContext = appContext;
     }
 }
 
