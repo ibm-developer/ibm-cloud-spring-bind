@@ -19,6 +19,8 @@ public class CloudServicesConfigV1Test {
 
     String VCAP_SERVICES = "{\"cloudantNoSQLDB\":[{\"credentials\":{\"username\":\"VCAP_SERVICES-username\",\"password\":\"VCAP_SERVICES-password\",\"host\":\"VCAP_SERVICES.cloudant.com\",\"port\":999,\"url\":\"https://VCAP_SERVICES.cloudant.com\"},\"syslog_drain_url\":null,\"volume_mounts\":[],\"label\":\"cloudantNoSQLDB\",\"provider\":null,\"plan\":\"Lite\",\"name\":\"VCAP_SERVICES-cloudantno-1234567890\",\"tags\":[\"data_management\",\"ibm_created\",\"lite\",\"ibm_dedicated_public\"]}]}";
 
+    String VCAP_SERVICES_USER_PROVIDED = "{\"user-provided\":[{\"credentials\":{\"password\":\"VCAP_SERVICES-password\",\"url\":\"https://VCAP_SERVICES-url\",\"username\":\"VCAP_SERVICES-username\"},\"label\":\"user-provided\",\"name\":\"cloudant-instance-id\"}]}";
+
     String CLOUDANT_CONFIG_JSON = "{\"cloudant_username\":\"env-json-username\"}";
 
     private final CloudServicesEnvironmentPostProcessor initializer =
@@ -36,6 +38,14 @@ public class CloudServicesConfigV1Test {
     @Test
     public void getValueCF() {
         System.setProperty("VCAP_SERVICES", VCAP_SERVICES);
+        String userName = appContext.getEnvironment().getProperty("cloudant_username");
+        System.clearProperty("VCAP_SERVICES");
+        assertEquals("VCAP_SERVICES-username", userName);
+    }
+
+    @Test
+    public void getValueCFUserProvided() {
+        System.setProperty("VCAP_SERVICES", VCAP_SERVICES_USER_PROVIDED);
         String userName = appContext.getEnvironment().getProperty("cloudant_username");
         System.clearProperty("VCAP_SERVICES");
         assertEquals("VCAP_SERVICES-username", userName);
