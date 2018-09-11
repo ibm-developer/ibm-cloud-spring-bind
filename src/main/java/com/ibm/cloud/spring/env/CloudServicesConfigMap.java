@@ -173,7 +173,11 @@ class CloudServicesConfigMap {
     private String getJsonValue(String jsonPath, String json) {
         String value = null;
         if (jsonPath != null && json != null) {
-            value = JsonPath.parse(json).read(jsonPath);
+            try {
+                value = JsonPath.parse(json).read(jsonPath);
+            }
+            catch (PathNotFoundException e) {
+            }
         }
         return value;
     }
