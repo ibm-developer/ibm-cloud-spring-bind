@@ -41,7 +41,7 @@ Dependency configuration:
 <dependency>
    <groupId>com.ibm.cloud</groupId>
    <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
-   <version>1.1.0</version>
+   <version>1.1.1</version>
 </dependency>
 ```
 
@@ -49,7 +49,7 @@ Dependency configuration:
 
 ```groovy
 dependencies {
-    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-boot-service-bind', version: '0.0.1'
+    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-boot-service-bind', version: '1.1.1'
 }
 ```
 
