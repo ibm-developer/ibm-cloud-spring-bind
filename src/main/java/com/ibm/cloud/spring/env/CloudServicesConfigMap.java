@@ -124,6 +124,10 @@ class CloudServicesConfigMap {
                 return null;        //specified name could not be located
             }
         }
+        
+        if (node.get("credentials") != null) {
+            node = node.get("credentials");
+        }
         ArrayNode array = (ArrayNode) node.get("searchPatterns");
         if (array.isArray()) {
             for (final JsonNode entryNode : array) {
