@@ -8,7 +8,6 @@ This library provides Spring Boot auto configuration for accessing IBM Cloud ser
 * [Related Documentation](#related-documentation)
 * [Development](#development)  
   * [Contributing](#contributing)
-  * [Testing](#testing)
   * [Using in Other Projects](#using-in-other-projects)
   * [License](#license)
   * [Issues](#issues)
@@ -41,7 +40,7 @@ Dependency configuration:
 <dependency>
    <groupId>com.ibm.cloud</groupId>
    <artifactId>ibm-cloud-spring-boot-service-bind</artifactId>
-   <version>1.1.1</version>
+   <version>1.1.2</version>
 </dependency>
 ```
 
@@ -49,7 +48,7 @@ Dependency configuration:
 
 ```groovy
 dependencies {
-    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-boot-service-bind', version: '1.1.1'
+    compile group: 'com.ibm.cloud', name: 'ibm-cloud-spring-boot-service-bind', version: '1.1.2'
 }
 ```
 
@@ -90,9 +89,13 @@ Your application must be bound to an IBM Cloud service in order to use this libr
    cloudant.url=https://62c520dc-9367...cloudant.com
    ~~~  
  
+ 
+Additionally, the generated `mappings.json` file will be used to define search parameters for discovering credentials for 
+services. See the IBM Cloud Env [readme](https://github.com/ibm-developer/ibm-cloud-env) for more information about this file.
 
 
 ## Related documentation
+* [IBM Cloud Env](https://github.com/ibm-developer/ibm-cloud-env)
 * [IBM Cloud Developer Tools CLI](https://console.bluemix.net/docs/cloudnative/idt/index.html#developercli)
 * [IBM Cloud App Services Console](https://console.bluemix.net/developer/appservice/dashboard)
 * [IBM Cloud Services Catalg](https://console.bluemix.net/catalog/)
