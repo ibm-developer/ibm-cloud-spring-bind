@@ -1,3 +1,7 @@
+# WARNING: This repository is no longer maintained :warning:
+
+> This repository will not be updated. The repository will be kept available in read-only mode.
+
 # IBM Cloud Service Bindings For Spring Boot
 
 This library provides Spring Boot auto configuration for accessing IBM Cloud services config data.
